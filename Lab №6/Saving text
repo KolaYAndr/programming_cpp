@@ -1,0 +1,26 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    //создаём переменные
+    ofstream out;
+    string lyrics;
+
+    //вводим текст
+    getline(cin, lyrics);
+
+    //открываем файл, если открылся, записываем текст
+    out.open("C:/Users/kolay/OneDrive/Desktop/Учёба/Программирование C++/Lab06/ex.txt");
+    if (out.is_open())
+    {
+        out << lyrics << endl;
+    }
+
+    //выводим сообщение о конце программы
+    cout << "\nEnd of program" << endl;
+    return 0;
+}
