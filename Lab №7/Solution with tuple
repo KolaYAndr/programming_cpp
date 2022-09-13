@@ -1,0 +1,72 @@
+#include <iostream>
+#include <cmath>
+#include <tuple>
+	
+using namespace std;
+using Tuple = tuple<bool, int, int>;
+
+//создаём структуру и поля
+struct Solution
+{
+	double x1 = NULL, x2 = NULL;
+};
+
+//функция поиска решения
+Tuple findSolution(double a, double b, double c)
+{
+	Solution s;
+	Tuple t;
+	//проверяем квадратное ли уравнение
+	if (a == 0)
+	{
+		s.x1 = -c / b;
+		s.x2 = s.x1;
+	}
+	else {
+		//считаем дискриминант и находим корни
+		double D = b * b - 4 * a * c;
+		if (D >= 0)
+		{
+			s.x1 = (-b - sqrt(D) / (2 * a));
+			s.x2 = (-b + sqrt(D) / (2 * a));
+		}
+		else
+		{
+			//если корней нет, то в кортеж передаём null-значения и флаг false
+			t = make_tuple(false, NULL, NULL);
+			return t;
+		}
+	}
+	//если корни были найдены, то в кортеж передаём их и флаг true
+	t = make_tuple(true, s.x1, s.x2);
+	return t;
+}
+
+
+//функция вывода по флагу в кортеже
+void output(Tuple t)
+{
+	if (!get<0>(t)) cout << "No roots" << endl;
+	else if (get<1>(t) == get<2>(t)) cout << "Two equal roots " << get<1>(t) << endl;
+	else cout << "Two different roots " << get<1>(t) << " and " << get<2>(t) << endl;
+}
+
+int main()
+{
+	//вводим коэффициенты уравнения
+	cout << "Input coefficients" << endl;
+	cout << "a = ";
+	int a;
+	cin >> a;
+	cout << "b = ";
+	int b;
+	cin >> b;
+	cout << "c = ";
+	int c;
+	cin >> c;
+
+	//находим корни и выводим ответ
+	auto t = findSolution(a, b, c);
+	output(t);
+	return 0;
+}
