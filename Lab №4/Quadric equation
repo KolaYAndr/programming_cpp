@@ -1,0 +1,71 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int Myroot(double, double, double, double&, double&);
+
+int Myroot(double a, double b, double c, double& x1, double& x2)
+{
+	//проверка квадратное ли уравнение
+	if(a == 0)
+	{
+		x1 = -c / b;
+		x2 = x1;
+		return -1;
+		
+	} else
+	{
+		//вычисление дискриминанта
+		double D = b * b - 4 * a * c;
+
+		//вычисление корней в зависимости от дискриминанта
+		if (D > 0)
+		{
+			x1 = (-b - sqrt(D) / (2 * a));
+			x2 = (-b + sqrt(D) / (2 * a));
+			return 2;
+		}
+		else if (D == 0)
+		{
+			x1 = (-b / (2 * a));
+			x2 = (-b / (2 * a));
+			return 1;
+		}
+		else return 0;
+	}
+}
+
+
+int main()
+{
+	//инициализируем и вводим коэффициенты, инициализируем корни уравнения
+	double a, b, c, x1, x2;
+	cout << "Enter coefficients" << endl;
+	cout << "a = ";
+	cin >> a;
+	cout << "b = ";
+	cin >> b;
+	cout << "c = ";
+	cin >> c;
+
+	//получаем рузльтат решения
+	int res = Myroot(a, b, c, x1, x2);
+
+	//в зависимости от результата выводим ответ
+	switch(res)
+	{
+	case -1: 
+		cout << "The equation is linear with only one root " << x1 << endl;
+		break;
+	case -0: 
+		cout << "Roots don't exist" << endl;
+		break;
+	case 1: 
+		cout << "The equation has two equal roots " << x1 << endl;
+		break;
+	case 2: 
+		cout << "The equation has two different roots " << x1 << " " << x2 << endl;
+		break;
+	}
+}
