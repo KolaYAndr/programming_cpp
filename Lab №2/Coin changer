@@ -1,0 +1,24 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+	//инициализируем переменные и вводим суммарный номинал монет
+	int coins = 0, target;
+	cout << "Input sum" << endl;
+	cin >> target;
+
+	//присваиваем количеству монет целое число от деления суммы на номинал монет
+	coins = target / 10;
+	//в суммурный номинал кладём остаток от деления на номинал монет
+	target %= 10;
+	//повторяем предыдущие шаги
+	coins += target / 5;
+	target %= 5;
+	coins += target / 1;
+
+	//выводим количество монет
+	cout << "Coins needed " << coins;
+	return 0;
+}
