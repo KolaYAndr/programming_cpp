@@ -1,0 +1,39 @@
+#include <iostream>
+
+using namespace std;
+
+
+//создаём функцию ввода
+bool Input(int& a, int& b)
+{
+	//вводим значения с клавиатуры
+	cout << "Intput integers" << endl;
+	cin >> a >> b;
+
+	//в зависимости от ввода данных возвращаем значение
+	if ((a >= 10 || b >= 10) && (a <= 0 || b <= 0))
+	{
+		return false;
+	}
+	else return true;
+}
+
+int main()
+{
+	//создаём переменные
+	int a, b;
+
+	//если возвращается вводится неправльное значение, выводим сообщение
+	if (Input(a, b) == false)
+	{
+		cerr << "Incorrect data input";
+		return 1;
+	}
+	else 
+	{
+		//выводим сумму чисел
+		int s = a + b;
+		cout << "Sum is " << s;
+		return 0;
+	}
+}
