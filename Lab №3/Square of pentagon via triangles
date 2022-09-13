@@ -1,0 +1,44 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+//создаём функцию подчёта длины стороны через координаты
+double getSideLength(int x1, int y1, int x2, int y2){
+	double R = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+	return R;
+}
+
+//создаём фукнцию подсчёта площади через три стороны по формуле Герона
+double getSquare(double a, double b, double c){
+	double p = (a + b + c) / 2;
+	double R = sqrt(p * (p - a) * (p - b) * (p - c));
+	return R;
+}
+
+
+int main(){
+	//создаём перменные координат сторон и вводим их значения с клавиатуры
+	int x1, x2, y1, y2, x3, x4, y3, y4, x5, y5;
+	cout << "Enter the coordinates" << endl;
+	cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3 >> x4 >> y4 >> x5 >> y5;
+
+	//создаём переменные сторон и присваем им значения при помощи функции
+	double a, b, c, d, e, f, g;
+	a = getSideLength(x1, y1, x2, y2);
+	b = getSideLength(x2, y2, x3, y3);
+	f = getSideLength(x1, y1, x3, y3);
+	c = getSideLength(x3, y3, x4, y4);
+	e = getSideLength(x1, y1, x5, y5);
+	g = getSideLength(x1, y1, x4, y4);
+	d = getSideLength(x4, y4, x5, y5);
+
+	//подсчитывем площади трёх треугольников через функции и присваем их трём соответствующим переменным
+	double s1, s2, s3;
+	s1 = getSquare(a, b, f);
+	s2 = getSquare(f, c, g);
+	s3 = getSquare(e, d, g);
+
+	//выводим значение плоащади пятиугольника
+	cout << "The result is " << s1 + s2 + s3 << endl;
+}
