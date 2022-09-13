@@ -1,0 +1,32 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+	//создаём переменные и вводим их значения
+	int a, b, c, m;
+	cin >> a >> b >> c;
+
+	//в зависимости от того, какое число больше присваиваем перменной m его значение
+	if (a >= b && a >= c)
+	{
+		m = a;
+	}
+	if (b >= a && b >= c)
+	{
+		m = b;
+	}
+	if (c >= b && c >= a)
+	{
+		m = c;
+	}
+	if(a == b == c)
+	{
+		m = c;
+		cout << "They are equal";
+	}
+	
+	//выводим максимальное
+	cout << "The largest is " << m;
+}
