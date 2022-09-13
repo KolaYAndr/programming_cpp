@@ -1,0 +1,58 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+//создаём структуру с полями
+struct Solution
+{
+	double x1, x2;
+};
+
+//функция поиска решений
+Solution findSolution(double a, double b, double c)
+{
+	Solution s;
+	//проверка квадратное ли уравнение
+	if (a == 0)
+	{
+		s.x1 = -c / b;
+		s.x2 = s.x1;
+
+	}
+	else
+	{
+		//считаем дискриминант и присваиваем корням значения
+		double D = b * b - 4 * a * c;
+		s.x1 = (-b - sqrt(D) / (2 * a));
+		s.x2 = (-b + sqrt(D) / (2 * a));
+	}
+
+	return s;
+}
+
+//функция вывода в зависимости от количества коней
+void output(Solution s)
+{
+	if (s.x1 == s.x2) cout << "Only one root " << s.x1;
+	else cout << "Two roots " << s.x1 << " and " << s.x2;
+}
+
+int main()
+{
+	//вводим коэффициенты
+	cout << "Input coefficients" << endl;
+	cout << "a = ";
+	int a;
+	cin >> a;
+	cout << "b = ";
+	int b;
+	cin >> b;
+	cout << "c = ";
+	int c;
+	cin >> c;
+
+	//находим корни и выводим
+	Solution solution = findSolution(a, b, c);
+	output(solution);
+}
