@@ -20,6 +20,7 @@ void main() {
 	//присваиваем переменной площади значение по формуле
 	s = x1 * y2 + x2 * y3 + x3 * y4 + x4 * y5 + x5 * y1 - x2 * y1 - x3 * y2 - x4 * y3 - x5 * y4 - x1 * y5;
 	s = abs(s / 2);
+	
 	//устанавливаем точность и выводим
 	cout.precision(2);
 	cout << "Square size is " << s << endl;
