@@ -1,0 +1,25 @@
+#include <iostream>
+
+using namespace std;
+
+//создаём рекурсивную функцию суммы ряда
+int recursiveSum(int n)
+{
+	//условие выхода из рекурсии
+	if (n > 1) {
+		return 5 * n + recursiveSum(n - 1);
+	}
+	else return 5;
+}
+
+int main()
+{
+	//диалог с пользователем
+	cout << "Input index" << endl;
+	int n;
+	cin >> n;
+
+	//присваиваем значение и выводим ответ
+	int res = recursiveSum(n);
+	cout << "The result is " << res << endl;
+}
