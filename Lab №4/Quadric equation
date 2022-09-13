@@ -5,38 +5,6 @@ using namespace std;
 
 int Myroot(double, double, double, double&, double&);
 
-int Myroot(double a, double b, double c, double& x1, double& x2)
-{
-	//проверка квадратное ли уравнение
-	if(a == 0)
-	{
-		x1 = -c / b;
-		x2 = x1;
-		return -1;
-		
-	} else
-	{
-		//вычисление дискриминанта
-		double D = b * b - 4 * a * c;
-
-		//вычисление корней в зависимости от дискриминанта
-		if (D > 0)
-		{
-			x1 = (-b - sqrt(D) / (2 * a));
-			x2 = (-b + sqrt(D) / (2 * a));
-			return 2;
-		}
-		else if (D == 0)
-		{
-			x1 = (-b / (2 * a));
-			x2 = (-b / (2 * a));
-			return 1;
-		}
-		else return 0;
-	}
-}
-
-
 int main()
 {
 	//инициализируем и вводим коэффициенты, инициализируем корни уравнения
@@ -67,5 +35,36 @@ int main()
 	case 2: 
 		cout << "The equation has two different roots " << x1 << " " << x2 << endl;
 		break;
+	}
+}
+
+int Myroot(double a, double b, double c, double& x1, double& x2)
+{
+	//проверка квадратное ли уравнение
+	if(a == 0)
+	{
+		x1 = -c / b;
+		x2 = x1;
+		return -1;
+		
+	} else
+	{
+		//вычисление дискриминанта
+		double D = b * b - 4 * a * c;
+
+		//вычисление корней в зависимости от дискриминанта
+		if (D > 0)
+		{
+			x1 = (-b - sqrt(D) / (2 * a));
+			x2 = (-b + sqrt(D) / (2 * a));
+			return 2;
+		}
+		else if (D == 0)
+		{
+			x1 = (-b / (2 * a));
+			x2 = (-b / (2 * a));
+			return 1;
+		}
+		else return 0;
 	}
 }
