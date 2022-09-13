@@ -1,0 +1,26 @@
+#include <iostream>
+
+using namespace std;
+
+void binary(int n)
+{
+	//условие входа в рекурсию
+	if (n > 0)
+	{
+		binary(n / 2);
+		//после выхода печать значения остатка от деления на 2
+		cout << n % 2;
+	}
+}
+
+int main()
+{
+	//диалог с пользователем
+	cout << "Input your number: ";
+	int n;
+	cin >> n;
+
+	//вывод ответа
+	cout << "Your number in binary - ";
+	binary(n);
+}
