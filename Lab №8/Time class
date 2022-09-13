@@ -1,0 +1,46 @@
+#include <iostream>
+#include "Time.h"
+
+using namespace std;
+
+
+int main() {
+    //вводим значения первого времени
+    int hours, minutes, seconds;
+    cout << "First time" << endl;
+    cout << "Input hours ";
+    cin >> hours;
+    cout << "Input minutes ";
+    cin >> minutes;
+    cout << "Input seconds ";
+    cin >> seconds;
+
+    //через конструктор создаём время
+    Time t1 = Time(hours, minutes, seconds);
+
+    //вводим значения второго времени
+    cout << "Second time" << endl;
+    cout << "Input hours ";
+    cin >> hours;
+    cout << "Input minutes ";
+    cin >> minutes;
+    cout << "Input seconds ";
+    cin >> seconds;
+
+    //через конструктор создаём время
+    Time t2 = Time(hours, minutes, seconds);
+
+    //выводим первые два времени
+    t1.show_time();
+    t2.show_time();
+
+    //третье время создаём динамически
+    Time* t3 = new Time();
+
+    //присваиваем ему значение суммы первых двух
+    t3->sum(t1, t2);
+
+    //выводим третье время
+	t3->show_time();
+    return 0;
+}   
