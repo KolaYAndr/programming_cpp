@@ -1,0 +1,76 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+//указываем прототип функции
+int* sort(int, int[]);
+
+int main()
+{
+    //вводим длину массива
+    int n;
+    cout << "Input length: ";
+    cin >> n;
+    //создаём динамический массив
+    int* mas = new int[n];
+
+	//вводим массив
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Input element: ";
+        cin >> mas[i];
+    }
+
+    //инициализируем отсортированный массив
+    const int* sorted = sort(n, mas);
+
+    //открываем файл и записываем
+    ofstream out;
+    out.open("C:/Users/kolay/OneDrive/Desktop/Учёба/Программирование C++/Lab06/massive.txt");
+    if(out.is_open())
+    {
+        out << "Start massive: ";
+	    for(int i = 0; i < n; i++)
+	    {
+            out << mas[i];
+            if (i != n - 1) out << ", ";
+            else out << "\n";
+	    }
+        out << "Sorted: ";
+        for (int i = 0; i < n; i++)
+        {
+            out << sorted[i];
+            if (i != n - 1) out << ", ";
+            else out << "\n";
+        }
+    }
+
+    //выводим сообщение о конце программы
+    cout << "Finished" << endl;
+
+    //освобождаем память
+    delete[]sorted;
+    return 0;
+}
+
+int* sort(const int N, int mas[])
+{
+    //функция сортировки в цикле
+    int min;
+
+    for (int i = 0; i < N; i++)
+    {
+        min = i;
+        for (int j = i + 1; j < N; j++)
+            min = (mas[j] < mas[min]) ? j : min;
+        if (i != min)
+        {
+	        int buf = mas[i];
+            mas[i] = mas[min];
+            mas[min] = buf;
+        }
+    }
+
+    return mas;
+}
