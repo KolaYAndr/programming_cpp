@@ -1,0 +1,50 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	//создаём различные счётчики и флаги и присваиваем им значения
+	int counter = 0, icounter, jcounter = 1, newCounter = 0;
+	bool simpleFlag = false, superSimpleFlag = false;
+
+	//вводим число
+	cout << "Input number: ";
+	int number;
+	cin >> number;
+
+	//если введена 1, то сразу заканчиваем ход программы
+	if (number == 1)
+	{
+		cout << "1 is hard to decide";
+		return 0;
+	}
+
+	//запускаем счётчик, в ходе которого проверяем на простоту само число и ищем количество встреченных простых чисел до него
+	for (int i = 2; i < number; i++) {
+		if (number % i == 0) { counter++; }
+		icounter = 0;
+		for (int j = 1; j <= i; j++) {
+			if (i % j == 0) icounter++;
+		}
+		if (icounter == 2) jcounter++;
+	}
+
+	//проверяем по количеству делителей введённое число
+	if (counter == 0) simpleFlag = true;
+
+	//проверяем на простоту номер чисела
+	for (int i = 2; i < jcounter; i++)
+	{
+		if (jcounter % i == 0) newCounter++;
+	}
+
+	//если число простое и его номер также простое число, тогда присваиваем ему значение суперпростого числа
+	if (newCounter == 0 && simpleFlag) superSimpleFlag = true;
+
+	//выводим в консоль ответ
+	if (superSimpleFlag) cout << number << " is super simple!";
+	else if (simpleFlag) cout << number << " is not super but simple!";
+	else cout << number << " is not even simple";
+
+	return 0;
+}
