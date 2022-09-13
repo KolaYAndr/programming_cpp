@@ -1,0 +1,63 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+
+int main()
+{
+	//создаём переменные ветра и произвольный центр мишени
+	srand(time(NULL));
+	int wind = rand() % 3 - 1;
+	int x0 = rand() % 5 - 2;
+	int y0 = rand() % 5 - 2;
+	//создаём пеменные координа стрельбы и счётчики
+	int x, y, sum = 0, counter = 0;
+
+	//проверяем на наличие ветра
+	if(wind == 0)
+	{
+		cout << "No wind" << endl;
+	}
+	else
+	{
+		cout << "Wind blows to " << wind << endl;
+	}
+
+	//цикл стрельбы
+	while (sum < 50) {
+
+		//вводим координаты
+		cout << "Enter coordinates" << endl;
+		cin >> x >> y;
+
+		//сдуваем по x ветром
+		x += wind;
+
+		//проверяем куда попали и увеличивем счётчики
+		if ((x - x0) * (x - x0) + (y - y0) * (y - y0) <= 1)
+		{
+			sum += 10;
+			cout << "Excellent" << endl;
+		}
+		else if ((x - x0) * (x - x0) + (y - y0) * (y - y0) <= 4)
+		{
+			sum += 5;
+			cout << "Good one" << endl;
+		}
+		else cout << "Missed" << endl;
+
+		cout << "Current points are " << sum << endl;
+		counter++;
+	}
+
+	//выводим уровень стрельбы пользователя 
+	if (counter <= 6)
+	{
+		cout << "You are the sniper" << endl;
+	}
+	else if (counter <= 10)
+	{
+		cout << "You are not the usual shooter" << endl;
+	}
+	else cout << "You are the usual shooter";
+
+}
