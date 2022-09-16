@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//объявляем класс
+class Triangle
+{
+public:
+	//объявляем класс ошибок
+	class ExceptionExistence
+	{
+	public:
+		//пустой конструктор
+		ExceptionExistence(){}
+		//функция вывода сообщения
+		void print_message() const { cout << message << endl; }
+	private:
+		string message = "Doesn't fit the triangle existence rule!";
+
+	};
+
+	//конструктор для треугольника
+	Triangle(int a, int b, int c)
+	{
+		//проверяем каждую сторону на соответствие правилу треугольника
+		if (a + b < c)	throw ExceptionExistence();
+		else if (a + c < b)  throw ExceptionExistence();
+		else if (b + c < a) throw ExceptionExistence();
+		else {
+			//если соответствует, тогда передаём параметры в поля
+			Triangle::a = a;
+			Triangle::b = b;
+			Triangle::c = c;
+		}
+	}
+
+private:
+	int a, b, c;
+};
+
+int main()
+{
+	//вводим стороны
+	int a, b, c;
+	cout << "Input sides" << endl;
+	cin >> a >> b >> c;
+
+	//отлавливаем ошибку
+	try {
+		Triangle t1 = Triangle(a, b, c);
+	}
+	catch(Triangle::ExceptionExistence& error)
+	{
+		cout << "Error" << endl;
+		error.print_message();
+	}
+
+	//вводим стороны
+	cout << "Input sides" << endl;
+	cin >> a >> b >> c;
+	//отлавливаем ошибку
+	try {
+		Triangle t2 = Triangle(a, b, c);
+	}
+	catch (Triangle::ExceptionExistence& error)
+	{
+		cout << "Error" << endl;
+		error.print_message();
+	}
+
+}
