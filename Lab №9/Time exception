@@ -1,0 +1,134 @@
+#include <iostream>
+
+using namespace std;
+
+//класс времени
+class Time {
+public:
+    //класс ошибки
+    class TimeException
+    {
+    public:
+        //в конструкторе ошибки получаем в какой части времени ошибка
+        TimeException(bool hours_flag, bool minutes_flag, bool seconds_flag)
+        {
+            if (hours_flag) message += "Error in hours\n";
+            if (minutes_flag) message += "Error in minutes\n";
+            if (seconds_flag) message += "Error in seconds";
+        }
+        void print_message() const { cout << message << endl; }
+    private:
+        string message;
+    };
+    //описываем функции установки и получения часов, минут и секунд
+    void set_hours(int hours) {
+        Time::hours = hours;
+    }
+
+    void set_minutes(int minutes) {
+        Time::minutes = minutes;
+    }
+
+    void set_seconds(int seconds) {
+        Time::seconds = seconds;
+    }
+
+    int get_hours() const {
+        return Time::hours;
+    }
+
+    int get_minutes() const {
+        return Time::minutes;
+    }
+
+    int get_seconds() const {
+        return Time::seconds;
+    }
+
+    //функция вывода времени
+    void show_time() const {
+        cout << "Time is - " << Time::get_hours() << ":" << Time::get_minutes() << ":" << Time::get_seconds() << endl;
+    }
+
+
+    //конструтор с вызовом ошибки при неправильном вводе данных
+    Time(int hours, int minutes, int seconds) {
+        bool hours_flag = false;
+        bool minutes_flag = false;
+        bool seconds_flag = false;
+
+        if (hours >= 24) hours_flag = true;
+        if (minutes >= 60) minutes_flag = true;
+        if (seconds >= 60) seconds_flag = true;
+
+
+        if(hours_flag || minutes_flag || seconds_flag) throw TimeException(hours_flag, minutes_flag, seconds_flag);
+        else
+        {
+            Time::hours = hours;
+            Time::minutes = minutes;
+            Time::seconds = seconds;
+        }
+        
+    }
+
+    //конструктор без параметров объявляет время 0:0:0
+    Time() {
+        Time::hours = 0;
+        Time::minutes = 0;
+        Time::seconds = 0;
+    }
+
+    void sum(Time t1, Time t2) {
+        //суммируем через приведение к секундам
+        int temp =
+            (t1.get_hours() + t2.get_hours()) * 3600 + (t1.get_minutes() + t2.get_minutes()) * 60 + t1.get_seconds() +
+            t2.get_seconds();
+
+        int hours = temp / 3600;
+        temp %= 3600;
+        int minutes = temp / 60;
+        temp %= 60;
+        int seconds = temp;
+
+        if (seconds >= 60) {
+            seconds %= 60;
+            minutes++;
+        }
+
+        if (minutes >= 60) {
+            minutes %= 60;
+            hours++;
+        }
+
+        if (hours >= 24) hours %= 24;
+
+        Time::set_hours(hours);
+        Time::set_minutes(minutes);
+        Time::set_seconds(seconds);
+    }
+private:
+    int hours, minutes, seconds;
+};
+int main()
+{
+    //вводим время
+    int hours, minutes, seconds;
+    cout << "Input hours ";
+    cin >> hours;
+    cout << "Input minutes ";
+    cin >> minutes;
+    cout << "Input seconds ";
+    cin >> seconds;
+
+    //отлавливаем ошибку
+    try {
+        Time t = Time(hours, minutes, seconds);
+    }
+    catch (Time::TimeException& error)
+    {
+        error.print_message();
+    }
+
+    return 0;
+}
