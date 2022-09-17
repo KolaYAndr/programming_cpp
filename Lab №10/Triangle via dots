@@ -1,0 +1,26 @@
+#include <iostream>
+#include "Triangle.h"
+#include "Dot.h"
+
+using namespace std;
+
+int main()
+{
+	//создаём три точки
+	Dot d1 = Dot();
+	Dot d2 = Dot(2, 0);
+	Dot d3 = Dot(0, 2);
+
+	//создаём треугольник
+	Triangle t = Triangle(&d1, &d2, &d3);
+
+	//получаем периметр и площадь
+	double perimeter = t.get_perimeter();
+	double square = t.get_square();
+
+	//выводим
+	t.show_sides();
+	cout << "Perimeter is " << perimeter << endl << "Square is " << square << endl;
+
+	return 0;
+}
