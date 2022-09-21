@@ -1,0 +1,197 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+//объявляем класс Time
+class Time {
+    //задаём поля приватными
+private:
+    int hours, minutes, seconds;
+public:
+    //класс ошибки
+    class TimeException
+    {
+    public:
+        //в конструкторе ошибки получаем в какой части времени ошибка
+        TimeException(bool hours_flag, bool minutes_flag, bool seconds_flag)
+        {
+            if (hours_flag) message += "Error in hours\n";
+            if (minutes_flag) message += "Error in minutes\n";
+            if (seconds_flag) message += "Error in seconds";
+        }
+        void print_message() const { cout << message << endl; }
+    private:
+        string message;
+    };
+    //объявляем прототипы
+    Time();
+    Time(int, int, int);
+    //функция вывода
+    void show_time() const;
+    int get_hours() const;
+    int get_minutes() const;
+    int get_seconds() const;
+    Time sum(Time, Time);
+    Time substract(Time, Time);
+    Time operator+(Time);
+    Time operator+(float);
+    friend Time operator+(float, Time);
+    Time operator-(Time);
+    bool operator<(Time) const;
+    bool operator>(Time) const;
+};
+
+//пустой конструктор
+Time::Time() {
+    Time::hours = 0;
+    Time::minutes = 0;
+    Time::seconds = 0;
+}
+
+//конструктор с параметрами
+Time::Time(int hours, int minutes, int seconds) {
+    Time::hours = hours;
+    Time::minutes = minutes;
+    Time::seconds = seconds;
+}
+
+//метод вывода
+void Time::show_time() const {
+    cout << "Time is " << Time::hours << ":" << Time::minutes << ":" << Time::seconds << endl;
+}
+
+//функция получения часов
+int Time::get_hours() const {
+    return Time::hours;
+}
+
+//функция получения минут
+int Time::get_minutes() const {
+    return Time::minutes;
+}
+
+//функция получения часов
+int Time::get_seconds() const {
+    return Time::seconds;
+}
+
+//функция суммирования
+Time Time::sum(Time t1, Time t2) {
+    //суммируем через приведение к секундам
+    int temp =
+        (t1.get_hours() + t2.get_hours()) * 3600 + (t1.get_minutes() + t2.get_minutes()) * 60 + t1.get_seconds() +
+        t2.get_seconds();
+
+    int hours = temp / 3600;
+    temp %= 3600;
+    int minutes = temp / 60;
+    temp %= 60;
+    int seconds = temp;
+
+    if (seconds >= 60) {
+        seconds %= 60;
+        minutes++;
+    }
+
+    if (minutes >= 60) {
+        minutes %= 60;
+        hours++;
+    }
+
+    if (hours >= 24) hours %= 24;
+
+    return { hours, minutes, seconds };
+}
+
+//функция вычетания
+Time Time::substract(Time t1, Time t2) {
+    int temp =
+        (t1.get_hours() - t2.get_hours()) * 3600 + (t1.get_minutes() - t2.get_minutes()) * 60 + t1.get_seconds() -
+        t2.get_seconds();
+
+    //работает даже если вычесть из меньшего большее
+    if (temp < 0) temp += 3600 * 24;
+
+    int hours = temp / 3600;
+    temp %= 3600;
+    int minutes = temp / 60;
+    temp %= 60;
+    int seconds = temp;
+
+    return { hours, minutes, seconds };
+}
+
+//переопределяем оператор сложения через вызов функции сложения
+Time Time::operator+(Time t) {
+    return sum(*this, t);
+}
+
+//сложение с вещественным числом
+//я выполнил в виде того, что число - количество часов
+//поэтому мы должны преобразовать его целую часть к часам, а дробную к минутам и секундам
+Time Time::operator+(float f) {
+    float temp;
+    int seconds = modf(f, &temp) * 3600;
+    int hours = temp;
+    int minutes = seconds / 60;
+    seconds %= 60;
+    Time t = Time(hours, minutes, seconds);
+    return *this + t;
+}
+
+//аналогично вырхнему сложению
+Time operator+(float f, Time t) {
+    float temp;
+    int seconds = modf(f, &temp) * 3600;
+    int hours = temp;
+    int minutes = seconds / 60;
+    seconds %= 60;
+    Time newt = Time(hours, minutes, seconds);
+
+    return newt + t;
+}
+
+
+//переопределяем вычетание через вызов функции разности
+Time Time::operator-(Time t) {
+    return substract(*this, t);
+}
+
+//переопределяем сравнение и приводим два времени к секундам, возвращаем значение в зависимости от того какой из них больше
+bool Time::operator<(Time t) const {
+    int temp1 = this->get_hours() * 3600 + this->get_minutes() * 60 + this->get_seconds();
+    int temp2 = t.get_hours() * 3600 + t.get_minutes() * 60 + t.get_seconds();
+
+    if (temp1 < temp2) return true;
+    else return false;
+}
+
+//переопределяем сравнение и приводим два времени к секундам, возвращаем значение в зависимости от того какой из них больше
+bool Time::operator>(Time t) const {
+    int temp1 = this->get_hours() * 3600 + this->get_minutes() * 60 + this->get_seconds();
+    int temp2 = t.get_hours() * 3600 + t.get_minutes() * 60 + t.get_seconds();
+
+    if (temp1 < temp2) return false;
+    else return true;
+}
+
+int main() {
+    Time t1 = Time(10, 0, 0);
+    float f = 3.555f;
+
+    Time t2 = t1 + f;
+    t2.show_time();
+    t2 = f + t1;
+    t2.show_time();
+
+    Time t3 = t1 + t2;
+    t3.show_time();
+
+    t3 = t2 - t1;
+    t3.show_time();
+
+    if (t2 > t1) cout << "t2 is bigger than t1" << endl;
+    if (t3 < t1) cout << "t3 is smaller than t1" << endl;
+    return 0;
+}
+
