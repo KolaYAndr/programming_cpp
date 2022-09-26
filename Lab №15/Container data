@@ -4,7 +4,8 @@
 
 using namespace std;
 
-struct StudentGrade {
+//объявляем структуру с конструктором
+struct StudentGrade{
     StudentGrade(string str, char ch) {
         name = str;
         grade = ch;
@@ -15,11 +16,15 @@ struct StudentGrade {
 };
 
 int main() {
+    //создаём журнал с оценками
     map<string, char> class_book;
-
+    
+    //диалог с пользователем
     cout << "How big group is?" << endl;
     int n = 0;
     cin >> n;
+    
+    //в цикле записываем каждого студента и его оценку
     for (int i = 0; i < n; i++) {
         string Name;
         cout << "Input name" << endl;
@@ -30,13 +35,15 @@ int main() {
         cin >> Grade;
 
         StudentGrade s = StudentGrade(Name, Grade);
-
+        
+        //в журнал добавляем значение по ключу
         class_book[s.name] = s.grade;
     }
-
-    for (const auto& elem : class_book)
+    
+    //выводим журнал
+    for(const auto& elem : class_book)
     {
-        cout << "Student: " << elem.first << "\n" << "Grade: " << elem.second << endl;
+        cout << "Student: " << elem.first << " " << "Grade: " << elem.second << endl;
     }
 
     return 0;
