@@ -1,0 +1,43 @@
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+struct StudentGrade {
+    StudentGrade(string str, char ch) {
+        name = str;
+        grade = ch;
+    }
+
+    string name;
+    char grade;
+};
+
+int main() {
+    map<string, char> class_book;
+
+    cout << "How big group is?" << endl;
+    int n = 0;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        string Name;
+        cout << "Input name" << endl;
+        cin >> Name;
+
+        char Grade;
+        cout << "Input grade" << endl;
+        cin >> Grade;
+
+        StudentGrade s = StudentGrade(Name, Grade);
+
+        class_book[s.name] = s.grade;
+    }
+
+    for (const auto& elem : class_book)
+    {
+        cout << "Student: " << elem.first << "\n" << "Grade: " << elem.second << endl;
+    }
+
+    return 0;
+}
