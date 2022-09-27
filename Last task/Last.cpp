@@ -8,7 +8,7 @@
 using namespace std;
 
 int main() {
-    //создаём людей
+    //создаём людей и кампусные карты
     AccessCard students_card = AccessCard("Student");
     AccessCard teachers_card = AccessCard("Teacher");
     AccessCard developers_card = AccessCard("Developer");
